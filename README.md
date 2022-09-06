@@ -11,8 +11,9 @@ pip install -r requirements.txt
 ```
 
 ## quick start
+After running following script, you can find export result in project directory. 
+
 ### Meteor
-After runing following script, you can find export result in project directory. 
 ```shell
 scrapy crawl Meteor -o "%(spider_name)s-%(run_date)s.csv"
 ```
