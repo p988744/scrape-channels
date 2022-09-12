@@ -13,7 +13,12 @@ pip install -r requirements.txt
 ## quick start
 After running following script, you can find export result in project directory. 
 
+### show available spiders
+```shell
+scrapy list
+```
+
 ### Meteor
 ```shell
-scrapy crawl Meteor -o "%(spider_name)s-%(run_date)s.csv"
+scrapy crawl meteor -O "%(spider_name)s-%(run_date)s.csv"
 ```

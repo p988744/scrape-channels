@@ -8,7 +8,7 @@ from channels.items import ChannelsItem
 
 
 class MeteorSpider(scrapy.Spider):
-    name = 'Meteor'
+    name = 'meteor'
     allowed_domains = ['meteor.today']
     start_urls = ['https://meteor.today/']
 
@@ -32,10 +32,10 @@ class MeteorSpider(scrapy.Spider):
             item['parent_name'] = rs.get('category')
 
             payload = {"boardId": item['_id'], "page": 0, "isCollege": False, "pageSize": 30}
-            yield scrapy.Request(url='https://meteor.today/article/get_new_articles', callback=self.parse_latest_post,
+            yield scrapy.Request(url='https://meteor.today/article/get_new_articles', callback=self.parse_channel,
                                  method="POST", body=json.dumps(payload), meta={'item': item})
 
-    def parse_latest_post(self, response, **kwargs):
+    def parse_channel(self, response, **kwargs):
         item = response.meta['item']
         result = response.json()
         if result.get('result'):
