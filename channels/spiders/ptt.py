@@ -11,14 +11,14 @@ from channels.items import ChannelsItem
 class PttSpider(scrapy.Spider):
     name = 'ptt'
     allowed_domains = ['www.pttweb.cc']
-    start_urls = ['http://www.pttweb.cc/']
+    start_urls = ['https://www.pttweb.cc/']
 
     def start_requests(self):
         urls = [
             'https://www.pttweb.cc/cls/1'
         ]
         for url in urls:
-            yield scrapy.Request(url=url, callback=self.parse, method="POST")
+            yield scrapy.Request(url=url, callback=self.parse, method="GET")
 
     def parse(self, response, **kwargs):
         category_list = []
@@ -43,7 +43,7 @@ class PttSpider(scrapy.Spider):
             })
 
         for category in category_list:
-            yield scrapy.Request(category.get('url'), callback=self.parse_category, method="POST",
+            yield scrapy.Request(category.get('url'), callback=self.parse_category, method="GET",
                                  meta={'category': category})
 
     def parse_category(self, response, **kwargs):
@@ -65,13 +65,14 @@ class PttSpider(scrapy.Spider):
             item['url'] = channel_url
             item['parent_name'] = response.meta.get('category').get('name')
 
-            yield scrapy.Request(channel_url, callback=self.parse_channel, method="POST", meta={'item': item})
+            yield scrapy.Request(channel_url, callback=self.parse_channel, method="GET", meta={'item': item})
 
     def parse_channel(self, response, **kwargs):
         item = response.meta['item']
         posts = response.css('.e7-container .e7-meta-container > .e7-grey-text')
-        latest_post = posts[0]
-        last_post_time = latest_post.css('span::text')[-1].get()
-        item['last_post_time'] = last_post_time
+        if posts:
+            latest_post = posts[0]
+            last_post_time = latest_post.css('span::text')[-1].get()
+            item['last_post_time'] = last_post_time
 
         return item
