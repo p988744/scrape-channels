@@ -7,6 +7,7 @@ authors = ["weifan <p988744@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Scrapy = "^2.6.2"
+python-dateutil = "^2.8.2"
 
 [tool.poetry.dev-dependencies]
 
