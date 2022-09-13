@@ -11,6 +11,7 @@ from channels.utils import get_user_agent
 PERIOD_MAPPING = {
     '天': 'days',
     '週': 'weeks',
+    '周': 'weeks',
     '月': 'months',
     '年': 'years',
     '小時': 'hours',
@@ -95,6 +96,6 @@ class PttSpider(scrapy.Spider):
                     # post_time = post_time.replace(key, '')
                     last_post_time = post_datetime.strftime(f'%Y/{post_date}')
                     break
-            item['last_post_time'] = last_post_time
+            item['last_post_time'] = last_post_time.replace('/', '-')
 
         return item
