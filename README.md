@@ -22,3 +22,20 @@ scrapy list
 ```shell
 scrapy crawl meteor -O "%(spider_name)s-%(run_date)s.csv"
 ```
+
+### PTT
+```shell
+scrapy crawl ptt -O "%(spider_name)s-%(run_date)s.csv"
+```
+
+### mobile01
+```shell   
+scrapy crawl mobile01 -O "%(spider_name)s-%(run_date)s.csv"
+```
+
+### youtube
+需要先去 [Google Developers Console](https://console.developers.google.com/) 申請 API Key，並將 API Key 設定在環境變數中。
+```shell
+export YT_API_KEY=your_api_key
+scrapy crawl youtube -O "%(spider_name)s-%(run_date)s.csv"
+```
